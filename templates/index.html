@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe App</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <a href="{{ url_for('add') }}">Add Recipe</a>
+    <a href="{{ url_for('register') }}">Register</a>
+
+    <form action="search_results.html" method="GET">
+        <input type="text" name="query" placeholder="Search for a recipe..." required>
+        <button type="submit">Search</button>
+    </form>
+
+    <div class="searchresults"></div>
+
+    <div class="recipe_cards">
+         
+
+                    <!-- # recipe[0] = name
+# ingredients [name, quanity, type, recipeid] -->
+<div class="recipe_cards">
+    {% for recipe in recipes %}
+        <div class="recipe_card">
+            <h3>{{ recipe[0] }}</h3> <!-- Recipe Name -->
+            <ul>
+                {% for ingredient in ingredients %}
+                    {% if ingredient[3] == recipe[1] %}
+                        <li>{{ ingredient[1] }} {{ ingredient[2] }} {{ ingredient[0] }}</li>  <!-- Ingredient Quantity, Unit, and Name -->
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endfor %}
+</div>
+
+                
+    </div>
+
+    <script>
+        document.querySelectorAll(".recipe_card a").forEach(link => {
+            link.addEventListener("click", function(event) {
+                event.preventDefault();
+                fetch(this.href)
+                    .then(response => response.text())
+                    .then(html => {
+                        document.getElementById("recipe-details").innerHTML = html;
+                    });
+            });
+        });
+
+        function displayItem(event) {
+            console.log("Displaying Recipe:", event.currentTarget.textContent);
+        }
+
+        document.querySelectorAll(".recipe_card").forEach(recipe => {
+            recipe.addEventListener("click", displayItem);
+        });
+    </script>
+</body>
+</html>

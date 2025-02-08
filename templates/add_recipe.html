@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+
+</head>
+<body>
+<h1>Add Recipe</h1>
+<form action="/submit_recipe" method="POST">
+    <h2>Recipe Name</h2>
+    <input type="text" name="recipe_name" placeholder="Enter Recipe Name" required>
+
+    <!-- <h2>Description</h2> -->
+    <!-- <input type="text" name="description" placeholder="Enter description" required> -->
+
+    <h3>Serving Size</h3>
+    <input type="number" name="serving_size" placeholder="Enter Serving Size" required>
+
+    <h2>Ingredients</h2>
+    <div id="ingredients-list">
+        <div class="ingredient-item">
+            <input type="text" name="ingredients[]" placeholder="Enter Ingredient" required>
+            <select name="units[]" required>
+
+                <option value="" selected disabled>-- Select Unit --</option>
+                <option value="cup">Item</option>
+                <option value="cup">Cup</option>
+                <option value="tbsp">Tbsp</option>
+                <option value="tsp">Tsp</option>
+                <option value="gram">Gram</option>
+                <option value="ounce">Ounce</option>
+                <option value="ml">ML</option>
+                <option value="liter">Liter</option>
+                <option value="pound">Pound</option>
+            </select>
+            <input class="quanity_number" type="number" name="quantities[]" min="1" value="1" required>
+            <button type="button" class="delete_button" onclick="this.parentElement.remove()">X</button>
+        </div>
+    </div>
+    <button type="button" onclick="addIngredient()">+ Add Ingredient</button>
+
+    <h2>Directions</h2>
+    <div id="directions-list">
+        <div class="directions-item">
+            <input type="text" name="directions[]" placeholder="Enter Step" required>
+            <button type="button" class="delete_button" onclick="this.parentElement.remove()">X</button>
+        </div>
+    </div>
+    <button type="button" onclick="addStep()">+ Add Step</button>
+
+    <hr>
+    <button type="submit">Add Recipe</button>
+</form>
+
+    <script>
+        function addIngredient() {
+            let div = document.createElement("div");
+            div.classList.add("ingredient-item"); // Apply CSS styling
+            div.innerHTML = `
+                <input type="text" name="ingredients[]" placeholder="Enter Ingredient" required>
+                <select name="units[]">
+                    <option value="" selected disabled>-- Select Unit --</option>
+                     <option value="cup">Item</option>
+                    <option value="cup">Cup</option>
+                    <option value="tbsp">Tbsp</option>
+                    <option value="tsp">Tsp</option>
+                    <option value="gram">Gram</option>
+                    <option value="ounce">Ounce</option>
+                    <option value="ml">ML</option>
+                    <option value="liter">Liter</option>
+                    <option value="pound">Pound</option>
+                </select>
+                <input type="number" class ="quantities" name="quantities[]" min="1" value="1" required>
+                <button type="button" class="delete_button" onclick="this.parentElement.remove()">X</button>
+            `;
+            document.getElementById("ingredients-list").appendChild(div);
+        }
+        function addStep(){
+            let div = document.createElement("div");
+            div.classList.add("directions-item"); // Apply CSS styling
+            div.innerHTML = `
+
+<input type="text" name="directions[]" placeholder="Enter Step" required>
+      
+            
+            <button type="button" class="delete_button" onclick="this.parentElement.remove()">X</button>
+            `;
+            document.getElementById("directions-list").appendChild(div);
+        }
+        </script>
+</body>
+
+</html>
