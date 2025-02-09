@@ -4,27 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='recipe_details.css') }}">
+
 </head>
 <body>
 
-    <h1 class="recipe_name">Recipe Name</h1>
-    <p class="recipe_description">This is a brief description of the recipe.</p>
+    <div class="recipe_card">
+        <h3>{{ recipes[0] }}</h3> <!-- Recipe Name -->
+        <ul> 
 
-    <h3 class="serving_size">Servings: 4</h3>
+             <h3>Ingredients</h3>
+             {% for ingredient in ingredients %}
+             <li>{{ ingredient[1] | round }} 
+                 {% if ingredient[2] == "cup" and ingredient[1] != 1 %}
+                     cups
+                 {% elif ingredient[2] == "tbsp" and ingredient[1] != 1 %}
+                     tablespoons
+                 {% elif ingredient[2] == "tsp" and ingredient[1] != 1 %}
+                     teaspoons
+                 {% elif ingredient[2] == "gram" and ingredient[1] != 1 %}
+                     grams
+                 {% elif ingredient[2] == "ounce" and ingredient[1] != 1 %}
+                     ounces
+                 {% elif ingredient[2] == "ml" and ingredient[1] != 1 %}
+                     milliliters
+                 {% elif ingredient[2] == "liter" and ingredient[1] != 1 %}
+                     liters
+                 {% elif ingredient[2] == "pound" and ingredient[1] != 1 %}
+                     pounds
+                 {% elif ingredient[2] != "item" %}
+                     {{ ingredient[2] }}
+                 {% endif %}
+                 {% if ingredient[1] != 1 %}
+                 {{ ingredient[0] }}(s)  <!-- Pluralize the ingredient name if quantity is more than 1 -->
+             {% else %}
+                 {{ ingredient[0] }}  <!-- Use the singular ingredient name if quantity is 1 -->
+             {% endif %}</li>
+         {% endfor %}
+        </ul>
+        <ol>
 
-    <h2>Ingredients</h2>
-    <ul>
-        <li>One</li>
-        <li>Two</li>
-        <li>Three</li>
-    </ul>
+            <h3>Steps:</h3>
+            {% for step in steps %}
+                
+                    <li>{{step[0]}}</li>
+               
+            {% endfor %}
+        </ol>
+   
+     </div> 
 
-    <h2>Directions</h2>
-    <ol>
-        <li>Step one</li>
-        <li>Step two</li>
-        <li>Step three</li>
-    </ol>
 
 </body>
 </html>

@@ -8,6 +8,22 @@
 
 </head>
 <body>
+    <a class="register_link" href="{{ url_for('register') }}">Register</a>
+    <a class="register_link" href="{{ url_for('login') }}">Login</a>
+
+    <form action="/login_user" method="POST">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="password">Password:</label>
+        <input type="text" id="key" name="key" required>
+
+        <button type="submit">Login</button>
+
+        {% if error %}
+        <p class="error">{{ error }}</p>
+        {% endif %}
+    </form>
 
    
     

@@ -8,7 +8,9 @@
 </head>
 <body>
     <a href="{{ url_for('add') }}">Add Recipe</a>
-    <a href="{{ url_for('register') }}">Register</a>
+
+    <a class="register_link" href="{{ url_for('register') }}">Register: Personal CookBook</a>
+    <a class="register_link" href="{{ url_for('login') }}">Login</a>
 
     <form action="search_results.html" method="GET">
         <input type="text" name="query" placeholder="Search for a recipe..." required>
@@ -17,28 +19,49 @@
 
     <div class="searchresults"></div>
 
-    <div class="recipe_cards">
-         
+    
+    <div class="welcome_message">
+        <h2>Welcome, User ID: {{ user_id }}</h2>
+    </div>
 
                     <!-- # recipe[0] = name
 # ingredients [name, quanity, type, recipeid] -->
 <div class="recipe_cards">
     {% for recipe in recipes %}
-        <div class="recipe_card">
-            <h3>{{ recipe[0] }}</h3> <!-- Recipe Name -->
-            <ul>
+        <form action="/recipe-details" method="GET">
+            <div class="recipe_card" onclick="this.closest('form').submit();" style="cursor: pointer;">
+                <h3>{{ recipe[0] }}</h3>  <!-- Recipe Name -->
+                <input type="hidden" name="recipe_id" value="{{ recipe[1] }}"> 
+            </div>
+        </form><!-- Recipe Name -->
+            <!-- <ul> -->
+
+
+                <!-- <h3>Ingredients</h3>
                 {% for ingredient in ingredients %}
                     {% if ingredient[3] == recipe[1] %}
-                        <li>{{ ingredient[1] }} {{ ingredient[2] }} {{ ingredient[0] }}</li>  <!-- Ingredient Quantity, Unit, and Name -->
-                    {% endif %}
+                        <li>{{ ingredient[1] }} {{ ingredient[2] }} {{ ingredient[0] }}</li>   Ingredient Quantity, Unit, and Name -->
+                    <!-- {% endif %}
                 {% endfor %}
             </ul>
-        </div>
+            <ol>
+
+                <h3>Steps:</h3>
+                {% for step in steps %}
+                    {% if step[1] == recipe[1] %}
+                        <li>{{step[0]}}</li>
+                    {% endif %}
+                {% endfor %}
+            </ol>
+        -->
+      
+
+
     {% endfor %}
 </div>
 
                 
-    </div>
+  
 
     <script>
         document.querySelectorAll(".recipe_card a").forEach(link => {
