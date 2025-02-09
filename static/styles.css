@@ -22,18 +22,20 @@ body h1{
     width: 75%;
     min-height: 50vh;
     display: grid;
-    grid-template-columns: 1fr 1fr ;
+    grid-template-columns: 1fr  ;
     margin: 0 auto;
+    margin-top: 5rem;
 
 }
 .recipe_card{
-   width: 95%;
+   width: 50%;
    background-color: #285769;
    padding: 2rem;
    margin: 0 auto;
-   margin: 1rem auto;
+   margin: .5rem auto;
    color: white;
-   border-radius: 1rem;
+   text-align: center;
+
 }
 
 .recipe_card:hover{

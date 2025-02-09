@@ -27,10 +27,12 @@ def login():
 
 @app.route('/')
 def home():
-    # if 'user_id' not in session:
-    #     return redirect('/login')
-    # user_id = session['user_id'] 
-    # user_id ="25" # Retrieve user ID from session
+    if 'user_id' not in session:
+        return redirect('/login')
+    user_id = session['user_id'] 
+
+    user_id = session.get('user_id')
+ # Retrieve user ID from session
 
     
     cursor = db.cursor()
@@ -56,7 +58,7 @@ def home():
     # steps = cursor.fetchall()
     # cursor.close()
 
-    return render_template('index.html', ingredients=ingredients, recipes=recipes, steps=steps)
+    return render_template('index.html', ingredients=ingredients, recipes=recipes, steps=steps, user_id=user_id)
 
 
 
@@ -104,7 +106,7 @@ def add_recipe():
     cursor = db.cursor()
     recipe_name = request.form.get('recipe_name')
     serving_size = request.form.get('serving_size')
-    user_id = session.get('user_id')
+    user_id = 1
 
     cursor.execute("INSERT INTO recipes (recipe_name, serving_size, users_idusers) VALUES (%s, %s, %s)", 
                    (recipe_name, serving_size, user_id))
